@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +17,6 @@
             justify-content: center;
             min-height: 100vh;
         }
-
         .container {
             background-color: rgba(0, 0, 0, 0.5);
             padding: 30px;
@@ -28,37 +26,30 @@
             max-width: 800px;
             margin: 20px;
         }
-
         .logo {
             display: block;
             margin: 0 auto 20px auto;
             max-width: 150px;
         }
-
         .title-page, .quiz-page, .result-page {
             display: none;
             text-align: center;
         }
-
         .title-page {
             display: block;
         }
-
         h1, h2, h3 {
             color: #ccff90;
         }
-
         .input-group {
             margin-bottom: 20px;
             text-align: left;
         }
-
         .input-group label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
-
         .input-group input {
             width: 100%;
             padding: 8px;
@@ -66,7 +57,6 @@
             border-radius: 5px;
             box-sizing: border-box;
         }
-
         button {
             padding: 10px 20px;
             border: none;
@@ -77,16 +67,13 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
         button:hover:not(:disabled) {
             background-color: #004d4d;
         }
-
         button:disabled {
             background-color: #555;
             cursor: not-allowed;
         }
-
         .question {
             margin-bottom: 20px;
             padding: 15px;
@@ -94,48 +81,39 @@
             border-radius: 8px;
             text-align: left;
         }
-
         .options label {
             display: block;
             margin: 10px 0;
             cursor: pointer;
         }
-
         .matching-pair {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
         }
-
         .matching-pair select {
             width: 45%;
             padding: 5px;
             border-radius: 5px;
         }
-
         .report-section {
             text-align: left;
             margin-top: 20px;
         }
-
         .report-section .feedback-section {
             padding: 10px;
             border-radius: 8px;
             margin-bottom: 10px;
         }
-
         .report-section .strength {
             background-color: #006400; /* Darker green */
         }
-
         .report-section .weakness {
             background-color: #8B0000; /* Darker red */
         }
-
         .report-section .feedback-box {
             background-color: rgba(255, 255, 255, 0.1);
         }
-
         /* Modal styling */
         .modal {
             position: fixed;
@@ -149,7 +127,6 @@
             align-items: center;
             justify-content: center;
         }
-
         .modal-content {
             background-color: #333;
             padding: 20px;
@@ -158,7 +135,6 @@
             max-width: 400px;
             text-align: center;
         }
-
         .modal-content button {
             margin-top: 15px;
         }
@@ -176,19 +152,17 @@
             </div>
             <button onclick="startAssessment()">Start Assessment</button>
         </div>
-
         <div class="quiz-page" id="quiz-page">
-            <h2 id="question-counter">Question 1 of 30</h2>
+            <h2 id="question-counter">Question 1 of 20</h2>
             <div id="question-container"></div>
             <button onclick="previousQuestion()" id="previous-button" style="display: none;">Previous</button>
             <button onclick="nextQuestion()" id="next-button">Next</button>
             <button onclick="submitAssessment()" style="display: none;" id="submit-button">Submit Assessment</button>
         </div>
-
         <div class="result-page" id="result-page">
             <h2>Assessment Report</h2>
             <p>Student: <span id="student-name-result"></span></p>
-            <p>Your Score: <span id="score"></span> / 30</p>
+            <p>Your Score: <span id="score"></span> / 20</p>
             <div class="report-section">
                 <h3>Strengths & Weaknesses</h3>
                 <div id="strengths-weaknesses"></div>
@@ -200,9 +174,8 @@
             <button onclick="downloadReport()">Download the Report</button>
         </div>
     </div>
-
     <script>
-        // Data for the 30-question quiz.
+        // Data for the 20-question quiz.
         const quizData = [
             { type: "multiple-choice", question: "1. Which of these is a physical part of a computer that you can touch?", options: ["Software", "Hardware", "Data", "App"], answer: "Hardware", topic: "Hardware" },
             { type: "true-false", question: "2. The monitor is used to print pictures.", answer: "False", topic: "Hardware" },
@@ -224,24 +197,12 @@
             { type: "case-study", question: "18. **Case Study:** You need to save your school project. What command should you use?", answer: "The 'Save' or 'Save As' command.", topic: "File Management" },
             { type: "multiple-choice", question: "19. Which of these is a way to stay safe online?", options: ["Sharing your home address", "Talking to strangers online", "Using a strong password", "Clicking on every link"], answer: "Using a strong password", topic: "Digital Citizenship" },
             { type: "true-false", question: "20. A file is a single document or picture stored on a computer.", answer: "True", topic: "File Management" },
-            { type: "fill-in-the-blank", question: "21. A _________ is a program that lets you surf the internet.", answer: "web browser", topic: "Internet" },
-            { type: "matching", question: "22. Match the device to what it is used for.", pairs: [{ left: "Speaker", right: ["Listening to sound", "Taking a picture"] }, { left: "Webcam", right: ["Taking a picture", "Listening to sound"] }], answers: { "Speaker": "Listening to sound", "Webcam": "Taking a picture" }, topic: "Hardware" },
-            { type: "short-answer", question: "23. What is 'cyberbullying'?", answer: "Using technology to hurt or scare someone.", topic: "Digital Citizenship" },
-            { type: "case-study", question: "24. **Case Study:** You want to make a list of your favourite books. What kind of program would be best?", answer: "A word processor or a text editor.", topic: "Software" },
-            { type: "multiple-choice", question: "25. Which of these is an example of an 'app' on a tablet?", options: ["A book", "A game", "A lamp", "A car"], answer: "A game", topic: "Software" },
-            { type: "true-false", question: "26. You should open an email attachment from a sender you don't know.", answer: "False", topic: "Digital Citizenship" },
-            { type: "fill-in-the-blank", question: "27. A _________ is a folder that holds other files.", answer: "folder", topic: "File Management" },
-            { type: "matching", question: "28. Match the device to its category.", pairs: [{ left: "Microphone", right: ["Input Device", "Output Device"] }, { left: "Headphones", right: ["Output Device", "Input Device"] }], answers: { "Microphone": "Input Device", "Headphones": "Output Device" }, topic: "Hardware" },
-            { type: "short-answer", question: "29. What is the purpose of a 'backup'?", answer: "To make a copy of a file so you don't lose it.", topic: "File Management" },
-            { type: "case-study", question: "30. **Case Study:** You want to find out what the weather will be like tomorrow. What would you use a computer for?", answer: "To search for the weather on the internet.", topic: "Internet" }
         ];
-
         // State variables for the quiz
         let currentQuestionIndex = 0;
         let score = 0;
         const userAnswers = {};
         let studentName = "";
-
         // Get DOM elements
         const titlePage = document.getElementById('title-page');
         const quizPage = document.getElementById('quiz-page');
@@ -251,7 +212,6 @@
         const submitButton = document.getElementById('submit-button');
         const nextButton = document.getElementById('next-button');
         const previousButton = document.getElementById('previous-button');
-
         /**
          * Starts the assessment, checks for student name, and displays the first question.
          */
@@ -266,24 +226,19 @@
             quizPage.style.display = 'block';
             loadQuestion();
         }
-
         /**
          * Renders the current question based on the `currentQuestionIndex`.
          */
         function loadQuestion() {
             if (currentQuestionIndex < 0) currentQuestionIndex = 0;
             if (currentQuestionIndex >= quizData.length) currentQuestionIndex = quizData.length - 1;
-
             const q = quizData[currentQuestionIndex];
             questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
             questionContainer.innerHTML = '';
-
             const questionDiv = document.createElement('div');
             questionDiv.classList.add('question');
-
             let questionHTML = `<h4>${q.question}</h4>`;
             questionDiv.innerHTML = questionHTML;
-
             // Render different question types and add event listeners
             if (q.type === 'multiple-choice' || q.type === 'true-false') {
                 const optionsDiv = document.createElement('div');
@@ -341,9 +296,7 @@
                 });
                 questionDiv.appendChild(matchingDiv);
             }
-
             questionContainer.appendChild(questionDiv);
-
             // Manage button visibility and state
             previousButton.style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
             if (currentQuestionIndex === quizData.length - 1) {
@@ -353,18 +306,15 @@
                 nextButton.style.display = 'inline-block';
                 submitButton.style.display = 'none';
             }
-
             // Disable next/submit button until an answer is provided
             checkAnswerStatus();
         }
-
         /**
          * Checks if the current question has been answered and enables the next/submit button.
          */
         function checkAnswerStatus() {
             const q = quizData[currentQuestionIndex];
             let isAnswered = false;
-
             if (q.type === 'multiple-choice' || q.type === 'true-false') {
                 isAnswered = document.querySelector(`input[name="answer"]:checked`) !== null;
             } else if (q.type === 'fill-in-the-blank' || q.type === 'short-answer' || q.type === 'case-study') {
@@ -379,14 +329,12 @@
                     }
                 });
             }
-
             if (currentQuestionIndex === quizData.length - 1) {
                 submitButton.disabled = !isAnswered;
             } else {
                 nextButton.disabled = !isAnswered;
             }
         }
-
         /**
          * Saves the current answer and moves to the next question.
          */
@@ -399,7 +347,6 @@
             currentQuestionIndex++;
             loadQuestion();
         }
-
         /**
          * Saves the current answer and moves to the previous question.
          */
@@ -408,7 +355,6 @@
             currentQuestionIndex--;
             loadQuestion();
         }
-
         /**
          * Checks if the current question has been answered.
          */
@@ -431,7 +377,6 @@
             }
             return false;
         }
-
         /**
          * Saves the user's answer for the current question.
          */
@@ -454,7 +399,6 @@
                 userAnswers[currentQuestionIndex] = matchingAnswers;
             }
         }
-
         /**
          * Handles the submission of the assessment.
          */
@@ -469,7 +413,6 @@
             evaluateAnswers();
             generateReport();
         }
-
         /**
          * Compares user answers to correct answers and calculates the score.
          */
@@ -500,14 +443,12 @@
             });
             document.getElementById('score').textContent = score;
         }
-
         /**
          * Generates the personalized report for the student.
          */
         function generateReport() {
             const topicScores = {};
             const topicCounts = {};
-
             // Calculate scores per topic
             quizData.forEach((q, index) => {
                 const topic = q.topic;
@@ -517,7 +458,6 @@
                     topicCounts[topic] = 0;
                 }
                 topicCounts[topic]++;
-
                 if (q.type === 'multiple-choice' || q.type === 'true-false') {
                     if (userAnswer === q.answer) {
                         topicScores[topic]++;
@@ -539,11 +479,9 @@
                     }
                 }
             });
-
             let strengthsHTML = '<h4>Strengths</h4><p>Based on the performance, the student has demonstrated a strong understanding of the following areas:</p><ul>';
             let weaknessesHTML = '<h4>Weaknesses</h4><p>Additional practice is recommended in the following topics:</p><ul>';
             let feedback = 'Overall, the student has shown a good understanding of the material. ';
-
             // Determine strengths and weaknesses
             let strongTopics = [];
             let weakTopics = [];
@@ -555,7 +493,6 @@
                     weakTopics.push(topic);
                 }
             }
-
             if (strongTopics.length > 0) {
                 strengthsHTML += `<li>${strongTopics.join('</li><li>')}</li>`;
                 feedback += `The student performed exceptionally well in **${strongTopics.join(', ')}**.`;
@@ -563,7 +500,6 @@
                 strengthsHTML += '<li>No specific strengths identified. Continued practice is encouraged.</li>';
                 feedback += 'Continued practice across all topics will help to build a stronger foundation.';
             }
-
             if (weakTopics.length > 0) {
                 weaknessesHTML += `<li>${weakTopics.join('</li><li>')}</li>`;
                 feedback += ` It is recommended that the student receive additional support in **${weakTopics.join(', ')}**.`;
@@ -571,15 +507,12 @@
                 weaknessesHTML += '<li>No specific weaknesses identified.</li>';
                 feedback += 'The student has a good grasp of the material across all topics.';
             }
-
             strengthsHTML += '</ul>';
             weaknessesHTML += '</ul>';
-
             document.getElementById('strengths-weaknesses').innerHTML = strengthsHTML + weaknessesHTML;
             document.getElementById('feedback').textContent = feedback;
             document.getElementById('parent-report').textContent = `Dear Parent/Guardian, This report summarizes the Grade 5 ICT Diagnostic Assessment for ${studentName}. The student scored ${score} out of ${quizData.length} questions. ${feedback} We recommend reviewing the areas identified for improvement. Please feel free to contact me with any questions. Sincerely, Mr. Usama Ibnzaid`;
         }
-
         /**
          * Shows a modal with a message.
          */
@@ -594,7 +527,6 @@
             `;
             document.body.insertAdjacentHTML('beforeend', modalHTML);
         }
-
         /**
          * Closes the modal.
          */
@@ -604,7 +536,6 @@
                 modal.remove();
             }
         }
-
         /**
          * Downloads the generated report as a text file.
          */
@@ -614,22 +545,8 @@
             const strengthsWeaknesses = document.getElementById('strengths-weaknesses').innerText;
             const feedback = document.getElementById('feedback').textContent;
             const parentReport = document.getElementById('parent-report').textContent;
-
-            const reportContent = `
-ICT Diagnostic Assessment Report
-Student: ${studentName}
-Score: ${score}
----
-Strengths & Weaknesses
-${strengthsWeaknesses}
----
-Constructive Feedback & Recommendations
-${feedback}
----
-Formal Written Report to Parent/Guardian
-${parentReport}
+            const reportContent = `ICT Diagnostic Assessment ReportStudent: ${studentName}Score: ${score}---Strengths & Weaknesses${strengthsWeaknesses}---Constructive Feedback & Recommendations${feedback}---Formal Written Report to Parent/Guardian${parentReport}
             `;
-
             const blob = new Blob([reportContent], { type: 'text/plain' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
