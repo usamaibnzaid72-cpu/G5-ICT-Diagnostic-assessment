@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,7 +81,7 @@
         button:hover:not(:disabled) {
             background-color: #004d4d;
         }
-        
+
         button:disabled {
             background-color: #555;
             cursor: not-allowed;
@@ -126,11 +127,11 @@
         .report-section .strength {
             background-color: #006400; /* Darker green */
         }
-        
+
         .report-section .weakness {
             background-color: #8B0000; /* Darker red */
         }
-        
+
         .report-section .feedback-box {
             background-color: rgba(255, 255, 255, 0.1);
         }
@@ -177,7 +178,7 @@
         </div>
 
         <div class="quiz-page" id="quiz-page">
-            <h2 id="question-counter">Question 1 of 50</h2>
+            <h2 id="question-counter">Question 1 of 30</h2>
             <div id="question-container"></div>
             <button onclick="previousQuestion()" id="previous-button" style="display: none;">Previous</button>
             <button onclick="nextQuestion()" id="next-button">Next</button>
@@ -187,7 +188,7 @@
         <div class="result-page" id="result-page">
             <h2>Assessment Report</h2>
             <p>Student: <span id="student-name-result"></span></p>
-            <p>Your Score: <span id="score"></span> / 50</p>
+            <p>Your Score: <span id="score"></span> / 30</p>
             <div class="report-section">
                 <h3>Strengths & Weaknesses</h3>
                 <div id="strengths-weaknesses"></div>
@@ -201,60 +202,40 @@
     </div>
 
     <script>
-        // Data for the 50-question quiz.
+        // Data for the 30-question quiz.
         const quizData = [
-            { type: "multiple-choice", question: "1. Which of these is a computer part you can touch?", options: ["Software", "Hardware", "Data", "Virus"], answer: "Hardware", topic: "Hardware" },
-            { type: "true-false", question: "2. The monitor is used for typing letters.", answer: "False", topic: "Hardware" },
-            { type: "fill-in-the-blank", question: "3. The main screen you see when you turn on a computer is called the _________.", answer: "desktop", topic: "Software" },
-            { type: "matching", question: "4. Match the device to its type.", pairs: [{ left: "Keyboard", right: ["Input Device", "Output Device"] }, { left: "Printer", right: ["Output Device", "Input Device"] }], answers: { "Keyboard": "Input Device", "Printer": "Output Device" }, topic: "Hardware" },
-            { type: "short-answer", question: "5. What is an 'app' short for?", answer: "Application", topic: "Software" },
-            { type: "case-study", question: "6. **Case Study:** A student wants to draw a picture on the computer. What type of program would they use?", answer: "A drawing or painting program.", topic: "Software" },
-            { type: "multiple-choice", question: "7. Which of these is a safe password?", options: ["123456", "password", "MyDogSparky", "f0rty$even#"], answer: "f0rty$even#", topic: "Digital Citizenship" },
+            { type: "multiple-choice", question: "1. Which of these is a physical part of a computer that you can touch?", options: ["Software", "Hardware", "Data", "App"], answer: "Hardware", topic: "Hardware" },
+            { type: "true-false", question: "2. The monitor is used to print pictures.", answer: "False", topic: "Hardware" },
+            { type: "fill-in-the-blank", question: "3. The main screen you see when a computer starts is called the _________.", answer: "desktop", topic: "Software" },
+            { type: "matching", question: "4. Match the device to its main job.", pairs: [{ left: "Keyboard", right: ["Typing", "Showing pictures"] }, { left: "Monitor", right: ["Showing pictures", "Typing"] }], answers: { "Keyboard": "Typing", "Monitor": "Showing pictures" }, topic: "Hardware" },
+            { type: "short-answer", question: "5. What is a computer 'virus'?", answer: "A harmful program that can make a computer sick.", topic: "Digital Citizenship" },
+            { type: "case-study", question: "6. **Case Study:** You want to draw a picture on the computer. What type of program would you use?", answer: "A drawing or painting program.", topic: "Software" },
+            { type: "multiple-choice", question: "7. Which of these is a safe password?", options: ["123456", "password", "mycatname", "S@f3P@ssw0rd!"], answer: "S@f3P@ssw0rd!", topic: "Digital Citizenship" },
             { type: "true-false", question: "8. A tablet is a type of computer.", answer: "True", topic: "Hardware" },
             { type: "fill-in-the-blank", question: "9. To find a website, you type its _________ into the address bar.", answer: "URL", topic: "Internet" },
-            { type: "matching", question: "10. Match the action to the program.", pairs: [{ left: "Typing a story", right: ["Word Processor", "Web Browser"] }, { left: "Finding a website", right: ["Web Browser", "Word Processor"] }], answers: { "Typing a story": "Word Processor", "Finding a website": "Web Browser" }, topic: "Software" },
+            { type: "matching", question: "10. Match the action to the program.", pairs: [{ left: "Writing a story", right: ["Word Processor", "Web Browser"] }, { left: "Finding a website", right: ["Web Browser", "Word Processor"] }], answers: { "Writing a story": "Word Processor", "Finding a website": "Web Browser" }, topic: "Software" },
             { type: "short-answer", question: "11. What is the main purpose of a 'search engine'?", answer: "To help you find information on the internet.", topic: "Internet" },
-            { type: "case-study", question: "12. **Case Study:** A student finds a funny picture online and wants to share it with a friend. What is the safest way to do this?", answer: "By asking an adult for help.", topic: "Digital Citizenship" },
-            { type: "multiple-choice", question: "13. What is a 'digital footprint'?", options: ["A mark left by a computer mouse", "The trail of data we leave online", "A type of keyboard", "A computer game"], answer: "The trail of data we leave online", topic: "Digital Citizenship" },
+            { type: "case-study", question: "12. **Case Study:** You find a picture online and want to save it to your computer. What should you do?", answer: "Right-click the picture and select 'Save Image As...'", topic: "File Management" },
+            { type: "multiple-choice", question: "13. What is a 'digital footprint'?", options: ["A mark on a computer screen", "The trail of data we leave online", "A type of keyboard", "A computer game"], answer: "The trail of data we leave online", topic: "Digital Citizenship" },
             { type: "true-false", question: "14. A computer mouse is an input device.", answer: "True", topic: "Hardware" },
             { type: "fill-in-the-blank", question: "15. The 'brain' of the computer is the _________.", answer: "CPU", topic: "Hardware" },
-            { type: "matching", question: "16. Match the term to its definition.", pairs: [{ left: "Monitor", right: ["An output device that shows images", "An input device for typing"] }, { left: "Keyboard", right: ["An input device for typing", "An output device that shows images"] }], answers: { "Monitor": "An output device that shows images", "Keyboard": "An input device for typing" }, topic: "Hardware" },
-            { type: "short-answer", question: "17. What does 'copy and paste' do?", answer: "It duplicates text or a picture from one place to another.", topic: "Software" },
-            { type: "case-study", question: "18. **Case Study:** A student is working on a school project and needs to save their work. What button or command should they use?", answer: "The 'Save' or 'Save As' command.", topic: "File Management" },
-            { type: "multiple-choice", question: "19. Which of these is a way to stay safe online?", options: ["Giving out personal information", "Talking to strangers online", "Using a strong password", "Clicking on every link"], answer: "Using a strong password", topic: "Digital Citizenship" },
-            { type: "true-false", question: "20. A file is a collection of data stored on a computer.", answer: "True", topic: "File Management" },
+            { type: "matching", question: "16. Match the term to its definition.", pairs: [{ left: "Monitor", right: ["Shows images and text", "Types letters"] }, { left: "Keyboard", right: ["Types letters", "Shows images and text"] }], answers: { "Monitor": "Shows images and text", "Keyboard": "Types letters" }, topic: "Hardware" },
+            { type: "short-answer", question: "17. What does 'copy and paste' do?", answer: "It makes a duplicate of text or a picture from one place to another.", topic: "Software" },
+            { type: "case-study", question: "18. **Case Study:** You need to save your school project. What command should you use?", answer: "The 'Save' or 'Save As' command.", topic: "File Management" },
+            { type: "multiple-choice", question: "19. Which of these is a way to stay safe online?", options: ["Sharing your home address", "Talking to strangers online", "Using a strong password", "Clicking on every link"], answer: "Using a strong password", topic: "Digital Citizenship" },
+            { type: "true-false", question: "20. A file is a single document or picture stored on a computer.", answer: "True", topic: "File Management" },
             { type: "fill-in-the-blank", question: "21. A _________ is a program that lets you surf the internet.", answer: "web browser", topic: "Internet" },
-            { type: "matching", question: "22. Match the device to what it is used for.", pairs: [{ left: "Speaker", right: ["Listening to sound", "Drawing on a screen"] }, { left: "Webcam", right: ["Taking pictures or video", "Listening to sound"] }], answers: { "Speaker": "Listening to sound", "Webcam": "Taking pictures or video" }, topic: "Hardware" },
-            { type: "short-answer", question: "23. What is an 'operating system'?", answer: "The main program that controls the computer's hardware and software.", topic: "Software" },
-            { type: "case-study", question: "24. **Case Study:** A student wants to send a letter to their grandmother using a computer. What program would they most likely use?", answer: "A word processor like Microsoft Word or Google Docs.", topic: "Software" },
-            { type: "multiple-choice", question: "25. Which of these is an example of a social media site?", options: ["Google", "Facebook", "Amazon", "Netflix"], answer: "Facebook", topic: "Internet" },
-            { type: "true-false", question: "26. You should always open an email attachment from a sender you don't know.", answer: "False", topic: "Digital Citizenship" },
-            { type: "fill-in-the-blank", question: "27. To make a document private, you can add a _________ to it.", answer: "password", topic: "Digital Citizenship" },
+            { type: "matching", question: "22. Match the device to what it is used for.", pairs: [{ left: "Speaker", right: ["Listening to sound", "Taking a picture"] }, { left: "Webcam", right: ["Taking a picture", "Listening to sound"] }], answers: { "Speaker": "Listening to sound", "Webcam": "Taking a picture" }, topic: "Hardware" },
+            { type: "short-answer", question: "23. What is 'cyberbullying'?", answer: "Using technology to hurt or scare someone.", topic: "Digital Citizenship" },
+            { type: "case-study", question: "24. **Case Study:** You want to make a list of your favourite books. What kind of program would be best?", answer: "A word processor or a text editor.", topic: "Software" },
+            { type: "multiple-choice", question: "25. Which of these is an example of an 'app' on a tablet?", options: ["A book", "A game", "A lamp", "A car"], answer: "A game", topic: "Software" },
+            { type: "true-false", question: "26. You should open an email attachment from a sender you don't know.", answer: "False", topic: "Digital Citizenship" },
+            { type: "fill-in-the-blank", question: "27. A _________ is a folder that holds other files.", answer: "folder", topic: "File Management" },
             { type: "matching", question: "28. Match the device to its category.", pairs: [{ left: "Microphone", right: ["Input Device", "Output Device"] }, { left: "Headphones", right: ["Output Device", "Input Device"] }], answers: { "Microphone": "Input Device", "Headphones": "Output Device" }, topic: "Hardware" },
-            { type: "short-answer", question: "29. What is 'cyberbullying'?", answer: "Using technology to hurt or scare someone.", topic: "Digital Citizenship" },
-            { type: "case-study", question: "30. **Case Study:** A student wants to make a video of their school trip. What device would they use to film it?", answer: "A digital camera, webcam, or a smartphone.", topic: "Hardware" },
-            { type: "multiple-choice", question: "31. Which of these is a type of computer?", options: ["Refrigerator", "Desktop computer", "Lamp", "Chair"], answer: "Desktop computer", topic: "Hardware" },
-            { type: "true-false", question: "32. The internet is the same thing as the World Wide Web.", answer: "False", topic: "Internet" },
-            { type: "fill-in-the-blank", question: "33. A _________ is a folder that holds other files and folders.", answer: "folder", topic: "File Management" },
-            { type: "matching", question: "34. Match the file type to its content.", pairs: [{ left: ".jpg", right: ["Picture file", "Text file"] }, { left: ".txt", right: ["Text file", "Picture file"] }], answers: { ".jpg": "Picture file", ".txt": "Text file" }, topic: "File Management" },
-            { type: "short-answer", question: "35. What is the purpose of a 'backup'?", answer: "To make a copy of a file in case the original is lost or damaged.", topic: "File Management" },
-            { type: "case-study", question: "36. **Case Study:** A student is working on a school project and needs to save their work. What button or command should they use?", answer: "The 'Save' or 'Save As' command.", topic: "File Management" },
-            { type: "multiple-choice", question: "37. What is 'computer programming'?", options: ["Playing a game on the computer", "Giving instructions to a computer to solve a problem", "Typing a document", "Sending a message"], answer: "Giving instructions to a computer to solve a problem", topic: "Programming" },
-            { type: "true-false", question: "38. All computers are connected to the internet.", answer: "False", topic: "Internet" },
-            { type: "fill-in-the-blank", question: "39. The process of turning off your computer is called _________.", answer: "shutting down", topic: "Hardware" },
-            { type: "matching", question: "40. Match the term to its meaning.", pairs: [{ left: "Download", right: ["To copy a file from the internet to your computer", "To send a file from your computer to the internet"] }, { left: "Upload", right: ["To send a file from your computer to the internet", "To copy a file from the internet to your computer"] }], answers: { "Download": "To copy a file from the internet to your computer", "Upload": "To send a file from your computer to the internet" }, topic: "Internet" },
-            { type: "short-answer", question: "41. What is a 'virus' in a computer?", answer: "A harmful program that can damage your computer or steal your information.", topic: "Digital Citizenship" },
-            { type: "case-study", question: "42. **Case Study:** A student wants to make a family tree. They need to put a picture and a name for each person. What kind of program would be best?", answer: "A presentation or diagram program.", topic: "Software" },
-            { type: "multiple-choice", question: "43. What does 'Wi-Fi' stand for?", options: ["Wired Fidelity", "Wireless Fidelity", "Web Fire", "Web Filter"], answer: "Wireless Fidelity", topic: "Internet" },
-            { type: "true-false", question: "44. You should share your personal information like your address or phone number online.", answer: "False", topic: "Digital Citizenship" },
-            { type: "fill-in-the-blank", question: "45. The physical parts of a computer are called _________.", answer: "hardware", topic: "Hardware" },
-            { type: "matching", question: "46. Match the device to its category.", pairs: [{ left: "Scanner", right: ["Input device", "Output device"] }, { left: "Monitor", right: ["Output device", "Input device"] }], answers: { "Scanner": "Input device", "Monitor": "Output device" }, topic: "Hardware" },
-            { type: "short-answer", question: "47. What is 'netiquette'?", answer: "The set of rules for good behavior online.", topic: "Digital Citizenship" },
-            { type: "case-study", question: "48. **Case Study:** A student needs to email a picture to their teacher. What command would they use in the email program?", answer: "The 'attach' or 'insert' command.", topic: "Internet" },
-            { type: "multiple-choice", question: "49. Which of these is a way to protect your computer?", options: ["Installing antivirus software", "Clicking on pop-up ads", "Sharing your password", "Downloading files from unknown sources"], answer: "Installing antivirus software", topic: "Digital Citizenship" },
-            { type: "true-false", question: "50. A program is a set of instructions that a computer can follow.", answer: "True", topic: "Programming" },
+            { type: "short-answer", question: "29. What is the purpose of a 'backup'?", answer: "To make a copy of a file so you don't lose it.", topic: "File Management" },
+            { type: "case-study", question: "30. **Case Study:** You want to find out what the weather will be like tomorrow. What would you use a computer for?", answer: "To search for the weather on the internet.", topic: "Internet" }
         ];
-        
+
         // State variables for the quiz
         let currentQuestionIndex = 0;
         let score = 0;
@@ -296,10 +277,10 @@
             const q = quizData[currentQuestionIndex];
             questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
             questionContainer.innerHTML = '';
-            
+
             const questionDiv = document.createElement('div');
             questionDiv.classList.add('question');
-            
+
             let questionHTML = `<h4>${q.question}</h4>`;
             questionDiv.innerHTML = questionHTML;
 
@@ -372,7 +353,7 @@
                 nextButton.style.display = 'inline-block';
                 submitButton.style.display = 'none';
             }
-            
+
             // Disable next/submit button until an answer is provided
             checkAnswerStatus();
         }
@@ -526,7 +507,7 @@
         function generateReport() {
             const topicScores = {};
             const topicCounts = {};
-            
+
             // Calculate scores per topic
             quizData.forEach((q, index) => {
                 const topic = q.topic;
@@ -596,73 +577,65 @@
 
             document.getElementById('strengths-weaknesses').innerHTML = strengthsHTML + weaknessesHTML;
             document.getElementById('feedback').textContent = feedback;
-            document.getElementById('parent-report').textContent = generateFormalReport(studentName);
+            document.getElementById('parent-report').textContent = `Dear Parent/Guardian, This report summarizes the Grade 5 ICT Diagnostic Assessment for ${studentName}. The student scored ${score} out of ${quizData.length} questions. ${feedback} We recommend reviewing the areas identified for improvement. Please feel free to contact me with any questions. Sincerely, Mr. Usama Ibnzaid`;
         }
-        
+
         /**
-         * Generates the formal, positive parent report.
-         * @param {string} name - The student's name.
+         * Shows a modal with a message.
          */
-        function generateFormalReport(name) {
-            return `Dear Guardian of ${name},
+        function showModal(message) {
+            const modalHTML = `
+                <div class="modal" id="myModal">
+                    <div class="modal-content">
+                        <p>${message}</p>
+                        <button onclick="closeModal()">OK</button>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
 
-This report provides a formal overview of the recent ICT diagnostic assessment completed by ${name}. This assessment is strictly a diagnostic tool designed to evaluate the student's current proficiency and identify areas of strength and areas that may require further development. This is not a graded test and will not affect the student's academic standing.
-
-The results of this assessment will be utilized by our instructional team to create a highly personalized learning plan for ${name}, ensuring that educational support is precisely tailored to their individual needs.
-
-We appreciate ${name}'s diligent effort during this assessment. The requirement to answer each question before moving to the next encourages a focused and careful approach, and ${name} successfully demonstrated this commitment to the task.
-
-The insights gained from this diagnostic will be invaluable in guiding future instruction and fostering continued academic growth. We look forward to partnering with you in ${name}'s educational journey.
-
-Sincerely,
-Mr. Usama Ibnzaid
-Riyadh schools - Hittin`;
+        /**
+         * Closes the modal.
+         */
+        function closeModal() {
+            const modal = document.getElementById('myModal');
+            if (modal) {
+                modal.remove();
+            }
         }
 
         /**
          * Downloads the generated report as a text file.
          */
         function downloadReport() {
+            const studentName = document.getElementById('student-name-result').textContent;
+            const score = document.getElementById('score').textContent;
+            const strengthsWeaknesses = document.getElementById('strengths-weaknesses').innerText;
+            const feedback = document.getElementById('feedback').textContent;
+            const parentReport = document.getElementById('parent-report').textContent;
+
             const reportContent = `
 ICT Diagnostic Assessment Report
 Student: ${studentName}
-Score: ${score} / ${quizData.length}
-
-Strengths:
-${document.getElementById('strengths-weaknesses').querySelector('h4').nextElementSibling.textContent}
-
-Weaknesses:
-${document.getElementById('strengths-weaknesses').querySelectorAll('h4')[1].nextElementSibling.textContent}
-
-Constructive Feedback:
-${document.getElementById('feedback').textContent}
-
-Formal Report to Parent/Guardian:
-${document.getElementById('parent-report').textContent}
+Score: ${score}
+---
+Strengths & Weaknesses
+${strengthsWeaknesses}
+---
+Constructive Feedback & Recommendations
+${feedback}
+---
+Formal Written Report to Parent/Guardian
+${parentReport}
             `;
+
             const blob = new Blob([reportContent], { type: 'text/plain' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `${studentName}_ICT_Assessment_Report.txt`;
-            document.body.appendChild(link);
+            link.download = `${studentName}_ICT_Report.txt`;
             link.click();
-            document.body.removeChild(link);
-        }
-
-        /**
-         * Simple modal for alerts, replacing the native alert() function.
-         */
-        function showModal(message) {
-            const modal = document.createElement('div');
-            modal.classList.add('modal');
-            const modalContent = document.createElement('div');
-            modalContent.classList.add('modal-content');
-            modalContent.innerHTML = `
-                <p>${message}</p>
-                <button onclick="this.parentNode.parentNode.remove()">OK</button>
-            `;
-            modal.appendChild(modalContent);
-            document.body.appendChild(modal);
+            URL.revokeObjectURL(link.href);
         }
     </script>
 </body>
